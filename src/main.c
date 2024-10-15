@@ -1,6 +1,7 @@
 #include <STC89C5xRC.H>
 #include "Int_Key.h"
 #include "Int_LED.h"
+#include "Int_Buzzer.h"
 
 void main()
 {
@@ -10,6 +11,7 @@ void main()
             if (K1 == 0) {
                 while (K1 == 0);
                 D1 = ~D1;
+                Int_Buzzer_Buzz();
             }
         }
         if (K2 == 0) {
