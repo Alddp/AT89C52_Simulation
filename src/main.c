@@ -1,16 +1,37 @@
 #include <STC89C5xRC.H>
-
-#include "Com_Util.h"
+#include "Int_Key.h"
+#include "Int_LED.h"
 
 void main()
 {
-    u8 tmp = 0x01; // 0000 0001
-    P0     = 0xFE; // 1111 1110
-    Com_Delayms(1000);
     while (1) {
-        tmp <<= 1;
-        if (tmp == 0x00) tmp = 0x01;
-        P0 = ~tmp;
-        Com_Delayms(1000);
+        if (K1 == 0) {
+            Com_Delayms(10);
+            if (K1 == 0) {
+                while (K1 == 0);
+                D1 = ~D1;
+            }
+        }
+        if (K2 == 0) {
+            Com_Delayms(10);
+            if (K2 == 0) {
+                while (K2 == 0);
+                D2 = ~D2;
+            }
+        }
+        if (K3 == 0) {
+            Com_Delayms(10);
+            if (K3 == 0) {
+                while (K3 == 0);
+                D3 = ~D3;
+            }
+        }
+        if (K4 == 0) {
+            Com_Delayms(10);
+            if (K4 == 0) {
+                while (K4 == 0);
+                D4 = ~D4;
+            }
+        }
     }
 }
