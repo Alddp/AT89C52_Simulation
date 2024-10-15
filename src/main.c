@@ -1,39 +1,19 @@
 #include <STC89C5xRC.H>
-#include "Int_Key.h"
-#include "Int_LED.h"
-#include "Int_Buzzer.h"
+#include "Int_DigitalTube.h"
+#include "Int_Key_Matrix.h"
 
 void main()
 {
+    u8 result;
+    u8 *nums = 0;
     while (1) {
-        if (K1 == 0) {
-            Com_Delayms(10);
-            if (K1 == 0) {
-                while (K1 == 0);
-                D1 = ~D1;
-                Int_Buzzer_Buzz();
-            }
+
+        result = Int_Key_Matrix_CheckS(); // 返回按下的按钮的编号
+
+        if (result) {
+            nums = Int_GetDisplayMemery(result); // 传入编号让数码管显示
         }
-        if (K2 == 0) {
-            Com_Delayms(10);
-            if (K2 == 0) {
-                while (K2 == 0);
-                D2 = ~D2;
-            }
-        }
-        if (K3 == 0) {
-            Com_Delayms(10);
-            if (K3 == 0) {
-                while (K3 == 0);
-                D3 = ~D3;
-            }
-        }
-        if (K4 == 0) {
-            Com_Delayms(10);
-            if (K4 == 0) {
-                while (K4 == 0);
-                D4 = ~D4;
-            }
-        }
+
+        Int_DigitalRefresh(nums); // 一直刷新数码管
     }
 }

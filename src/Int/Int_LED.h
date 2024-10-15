@@ -2,6 +2,7 @@
 #define __INT_LED_H__
 
 #include <STC89C5xRC.H>
+#include "Int_Buzzer.h"
 
 #define D1 P20
 #define D2 P21
