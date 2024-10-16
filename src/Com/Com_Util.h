@@ -4,7 +4,7 @@
 #include <INTRINS.H>
 
 typedef unsigned char u8;
-typedef unsigned char u16;
+typedef unsigned int u16;
 typedef unsigned long u32;
 
 void Com_Delay1s(void);
