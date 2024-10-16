@@ -2,10 +2,7 @@
 
 static unsigned char s_nums[11] = {0x3F, 0x06, 0x5B, 0x4F, 0x66,
                                    0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x00};
-/**
- * @param position 要显示的位置
- * @param digital 要显示的单个数字
- */
+
 void Int_ShowSingleDigital(u8 position, unsigned short digital)
 {
 
@@ -17,10 +14,7 @@ void Int_ShowSingleDigital(u8 position, unsigned short digital)
 
     P0 = s_nums[digital];
 }
-/**
- * @param num 要显示的多个数字, 最大8位
- * @return 返回包含要显示的数字的数组, 索引是要显示的位置
- */
+
 u8 *Int_GetDisplayMemery(u32 num)
 {
 
