@@ -1,4 +1,5 @@
 #include "Int_LEDMatrix.h"
+#include "Dri_Timer0.h"
 #include <STC89C5xRC.H>
 
 void main()
@@ -12,8 +13,8 @@ void main()
                  0x40,
                  0x80};
 
+    Dri_Timer0_Init();
+    Int_LEDMatrix_Init();
     Int_LEDMatrix_SetPic(pic);
-    while (1) {
-        Int_LEDMatrix_Refresh();
-    }
+    while (1);
 }

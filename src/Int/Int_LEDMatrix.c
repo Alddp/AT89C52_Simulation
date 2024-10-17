@@ -1,11 +1,19 @@
-#include "Int_LEDMatrix.h"
 #include <STC89C5xRC.H>
+#include "Int_LEDMatrix.h"
+#include "Dri_Timer0.h"
 
 #define DS    P34 // ´®ÐÐÊý¾ÝÊäÈë¿Ú
 #define SRCLK P36 // ÒÆÎ»¼Ä´æÆ÷
 #define RCLK  P35 // ´æ´¢¼Ä´æÆ÷
 
-static u8 s_buffer[8]; // ´æ´¢ÏÔÊ¾ÄÚÈÝ(P0¼Ä´æÆ÷×´Ì¬)
+static u8 s_buffer[8];
+void Int_LEDMatrix_RefreshByTimer0();
+
+void Int_LEDMatrix_Init()
+{
+    Dri_Timer0_RegisterCallback(Int_LEDMatrix_RefreshByTimer0);
+}
+// ´æ´¢ÏÔÊ¾ÄÚÈÝ(P0¼Ä´æÆ÷×´Ì¬)
 void Int_LEDMatrix_SetPic(u8 pic[])
 {
     u8 i;
@@ -34,6 +42,29 @@ void Int_LEDMatrix_Refresh()
 
         // 2. ÉèÖÃÏÔÊ¾ÄÚÈÝ
         P0 = ~s_buffer[i];
-        Com_Delayms(2);
+        Com_Delayms(1);
     }
+}
+
+void Int_LEDMatrix_RefreshByTimer0()
+{
+    static u8 i = 0;
+    P0          = 0xFF; // Çå¿ÕÉÏ´ÎµÄ¼ÇÂ¼
+
+    // 1. ÉèÖÃÏÔÊ¾ÄÄÐÐ
+    if (i == 0)
+        DS = 1;
+    else
+        DS = 0;
+
+    SRCLK = 0;
+    SRCLK = 1;
+
+    RCLK = 0;
+    RCLK = 1;
+
+    // 2. ÉèÖÃÏÔÊ¾ÄÚÈÝ
+    P0 = ~s_buffer[i];
+    i++;
+    if (i >= 8) i = 0;
 }
