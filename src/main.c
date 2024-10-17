@@ -1,21 +1,19 @@
-#include "Dri_Timer0.h"
-#include "Int_LED.h"
-#include "Com_Util.h"
+#include "Int_LEDMatrix.h"
+#include <STC89C5xRC.H>
 
-void light()
-{
-    static u16 count = 0;
-    count++;
-
-    if (count >= 500) {
-        D2    = ~D2;
-        count = 0;
-    }
-}
 void main()
 {
-    Dri_Timer0_Init();
-    Dri_Timer0_RegisterCallback(light);
+    u8 pic[8] = {0x1,
+                 0x2,
+                 0x4,
+                 0x8,
+                 0x10,
+                 0x20,
+                 0x40,
+                 0x80};
+
+    Int_LEDMatrix_SetPic(pic);
     while (1) {
+        Int_LEDMatrix_Refresh();
     }
 }
