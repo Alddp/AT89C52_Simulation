@@ -13,3 +13,7 @@
 # eide template
 *.ept
 *.eide-template
+
+
+proteus/Project Backups
+proteus/AT89C52.pdsprj.*.workspace
