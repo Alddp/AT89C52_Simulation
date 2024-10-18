@@ -1,5 +1,5 @@
 {
-  "name": "仿真",
+  "name": "AT89C52_Simulation",
   "type": "C51",
   "dependenceList": [],
   "srcDirs": [
@@ -24,7 +24,7 @@
       "uploader": "Custom",
       "uploadConfig": {
         "bin": "",
-        "commandLine": "python ./tools/stcflash.py -p ${port} \"${hexFile}\"",
+        "commandLine": "python ./tools/stcflash.py -p COM6 \"${hexFile}\"",
         "eraseChipCommand": ""
       },
       "uploadConfigMap": {},
