@@ -1,10 +1,24 @@
 #include <STC89C5xRC.H>
 #include "Dir_UART.h"
 #include "Com_Util.h"
+#include "Dri_Timer0.h"
 
 // 定义一个静态位变量来表示是否正在发送数据
 static bit s_is_sending = 0; // 0: 未在发送; 1: 正在发送
-static char s_buffer;
+static char s_buffer[16];
+static u8 s_index = 0;
+
+static u8 s_idle_count   = 0;
+static bit s_is_complete = 0;
+
+void Dir_UART_Timer0Callback()
+{
+    s_idle_count++;
+    if (s_index > 0 && s_idle_count >= 10) {
+        // 数据接收完毕
+        s_is_complete = 1;
+    }
+}
 
 void Dir_UART_Init()
 {
@@ -37,6 +51,9 @@ void Dir_UART_Init()
     ES = 1;
     RI = 0;
     TI = 0;
+
+    // 5. 注册空闲检测函数
+    Dri_Timer0_RegisterCallback(Dir_UART_Timer0Callback);
 }
 
 void Dir_UART_SendChar(char c)
@@ -54,14 +71,19 @@ void Dir_UART_SendStr(char *str)
     }
 }
 
-bit Dir_UART_ReceiveChar(char *c)
+bit Dri_UART_ReceiveStr(char *str)
 {
-    if (s_buffer) {
-        *c       = s_buffer;
-        s_buffer = 0;
+    if (s_is_complete == 1) {
+        u8 i;
+        for (i = 0; i < s_index; i++) {
+            str[i] = s_buffer[i];
+        }
+        str[s_index]  = '\0';
+        s_is_complete = 0;
+        s_index       = 0;
         return 1;
-    } else
-        return 0;
+    }
+    return 0;
 }
 
 /**
@@ -72,8 +94,9 @@ bit Dir_UART_ReceiveChar(char *c)
 void Dri_UART_Handler() interrupt 4
 {
     if (RI == 1) {
-        s_buffer = SBUF;
-        RI       = 0;
+        s_buffer[s_index++] = SBUF;
+        s_idle_count        = 0;
+        RI                  = 0;
     }
     if (TI == 1) {
         s_is_sending = 0;

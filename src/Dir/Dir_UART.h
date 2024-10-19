@@ -27,11 +27,11 @@ void Dir_UART_SendChar(char c);
 void Dir_UART_SendStr(char *str);
 
 /**
- * @brief 读取串口数据
+ * @brief 接收一个字符串
  *
- * @param c 存储读取到的数据的指针
- * @return bit   读取到数据返回1，否则返回0
+ * @param str 要接收的字符串
+ * @return bit 0: 接收失败，1: 接收成功
  */
-bit Dir_UART_ReceiveChar(char *c);
+bit Dri_UART_ReceiveStr(char *str);
 
 #endif // __DIR_UART_H__
