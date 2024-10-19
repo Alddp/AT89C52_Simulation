@@ -4,6 +4,7 @@
 
 // 定义一个静态位变量来表示是否正在发送数据
 static bit s_is_sending = 0; // 0: 未在发送; 1: 正在发送
+static char s_buffer;
 
 void Dir_UART_Init()
 {
@@ -53,6 +54,16 @@ void Dir_UART_SendStr(char *str)
     }
 }
 
+bit Dir_UART_ReceiveChar(char *c)
+{
+    if (s_buffer) {
+        *c       = s_buffer;
+        s_buffer = 0;
+        return 1;
+    } else
+        return 0;
+}
+
 /**
  * @brief 串口中断处理函数
  *
@@ -61,16 +72,8 @@ void Dir_UART_SendStr(char *str)
 void Dri_UART_Handler() interrupt 4
 {
     if (RI == 1) {
-
-        // 根据接收到的字符执行不同操作
-        if (SBUF == 'A') {
-            P2 = 0x00;
-        } else if (SBUF == 'B') {
-            P2 = 0xFF;
-        } else {
-            // 其他字符不执行任何操作
-        }
-        RI = 0;
+        s_buffer = SBUF;
+        RI       = 0;
     }
     if (TI == 1) {
         s_is_sending = 0;
