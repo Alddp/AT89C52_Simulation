@@ -1,8 +1,8 @@
 #include "Dri_IIC.h"
 #include <STC89C5xRC.H>
 
-#define SCL P00
-#define SDA P01
+#define SCL P21
+#define SDA P20
 
 void Dri_IIC_Start()
 {
