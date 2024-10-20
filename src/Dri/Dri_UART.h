@@ -1,12 +1,12 @@
-#if !defined(__DIR_UART_H__)
-#define __DIR_UART_H__
+#if !defined(__DRI_UART_H__)
+#define __DRI_UART_H__
 
 /**
  * @brief 初始化串口设置
  *
  * 该函数配置了串口的工作模式、波特率、接收数据和中断相关设置
  */
-void Dir_UART_Init();
+void Dri_UART_Init();
 
 /**
  * @brief 发送一个字符
@@ -15,16 +15,16 @@ void Dir_UART_Init();
  *
  * 此函数等待直到上一个字符发送完毕，然后发送新的字符
  */
-void Dir_UART_SendChar(char c);
+void Dri_UART_SendChar(char c);
 
 /**
  * @brief 发送一个字符串
  *
  * @param str 要发送的字符串
  *
- * 此函数使用Dir_UART_SendChar函数逐个字符地发送字符串
+ * 此函数使用Dri_UART_SendChar函数逐个字符地发送字符串
  */
-void Dir_UART_SendStr(char *str);
+void Dri_UART_SendStr(char *str);
 
 /**
  * @brief 接收一个字符串
@@ -34,4 +34,4 @@ void Dir_UART_SendStr(char *str);
  */
 bit Dri_UART_ReceiveStr(char *str);
 
-#endif // __DIR_UART_H__
+#endif // __DRI_UART_H__

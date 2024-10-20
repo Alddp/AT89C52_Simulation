@@ -1,9 +1,10 @@
-#include "Dir_IIC.h"
+#include "Dri_IIC.h"
+#include <STC89C5xRC.H>
 
 #define SCL P00
 #define SDA P01
 
-void Dir_IIC_Start()
+void Dri_IIC_Start()
 {
     SCL = 1;
     SDA = 1;
@@ -11,14 +12,14 @@ void Dir_IIC_Start()
     SCL = 0;
 }
 
-void Dir_ICC_Stop()
+void Dri_IIC_Stop()
 {
     SDA = 0;
     SCL = 1;
     SDA = 1;
 }
 
-void Dir_IIC_SendByte(u8 byte)
+void Dri_IIC_SendByte(u8 byte)
 {
     u8 i;
     for (i = 0; i < 8; i++) {
@@ -28,7 +29,7 @@ void Dir_IIC_SendByte(u8 byte)
     }
 }
 
-u8 Dir_ICC_ReceiveByte()
+u8 Dri_IIC_ReceiveByte()
 {
     u8 byte = 0;
     u8 i;
@@ -41,7 +42,7 @@ u8 Dir_ICC_ReceiveByte()
     return byte;
 }
 
-bit Dir_ICC_ReceiveAck()
+bit Dri_IIC_ReceiveAck()
 {
     bit ack;
     SDA = 1;
@@ -51,7 +52,7 @@ bit Dir_ICC_ReceiveAck()
     return ack;
 }
 
-void Dir_ICC_SendAck(bit ack)
+void Dri_IIC_SendAck(bit ack)
 {
     SDA = ack;
     SCL = 1;

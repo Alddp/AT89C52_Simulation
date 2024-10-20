@@ -1,5 +1,5 @@
 #include <STC89C5xRC.H>
-#include "Dir_UART.h"
+#include "Dri_UART.h"
 #include "Com_Util.h"
 #include "Dri_Timer0.h"
 
@@ -11,7 +11,7 @@ static u8 s_index = 0;
 static u8 s_idle_count   = 0;
 static bit s_is_complete = 0;
 
-void Dir_UART_Timer0Callback()
+void Dri_UART_Timer0Callback()
 {
     s_idle_count++;
     if (s_index > 0 && s_idle_count >= 10) {
@@ -20,7 +20,7 @@ void Dir_UART_Timer0Callback()
     }
 }
 
-void Dir_UART_Init()
+void Dri_UART_Init()
 {
     // 1. 设置串口工作模式
     SM0 = 0;
@@ -53,20 +53,20 @@ void Dir_UART_Init()
     TI = 0;
 
     // 5. 注册空闲检测函数
-    Dri_Timer0_RegisterCallback(Dir_UART_Timer0Callback);
+    Dri_Timer0_RegisterCallback(Dri_UART_Timer0Callback);
 }
 
-void Dir_UART_SendChar(char c)
+void Dri_UART_SendChar(char c)
 {
     while (s_is_sending == 1);
     s_is_sending = 1;
     SBUF         = c;
 }
 
-void Dir_UART_SendStr(char *str)
+void Dri_UART_SendStr(char *str)
 {
     while (*str != 0) {
-        Dir_UART_SendChar(*str);
+        Dri_UART_SendChar(*str);
         str++;
     }
 }
